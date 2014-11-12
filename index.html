@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="minuteApp">
+<head>
+  <meta charset="UTF-8">
+  <title>Minute Stopwatch</title>
+  <style>
+    html, body {
+      height: 100%;
+    }
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: monospace;
+    }
+    button {
+      border: 3px solid #fff;
+      font-size: 4em;
+      padding: 0 1em;
+      color: #fff;
+      font-family: monospace;
+      font-weight: lighter;
+      text-transform: uppercase;
+      border-radius: 8px;
+      background: #000;
+    }
+    button:hover {
+      background-color: #fff;
+      color: #000;
+      cursor: pointer;
+    }
+    .table {
+      height: 100%;
+      width: 100%;
+      display: table;
+      text-align: center;
+    }
+    .table-cell {
+      display: table-cell;
+      vertical-align: middle;
+    }
+    .minutes {
+      font-size: 4em;
+    }
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+  <script>
+    angular.module('minuteApp', [])
+    .controller('MainController', ['$scope', '$timeout', function($scope, $timeout) {
+      $scope.minutes = 0;
+      $scope.start = function() {
+        $scope.started = true;
+        var time = $timeout(function() {
+          $scope.minutes++;
+          $scope.start();
+        }, 60000);
+      }
+    }]);
+  </script>
+</head>
+<body>
+  <div class="table" ng-controller="MainController">
+    <div class="table-cell">
+      <span ng-if="started" class="minutes">{{minutes}} minutes</span>
+      <button ng-if="!started" ng-click="start();">Start</button>
+    </div>
+  </div>
+</body>
+</html>
